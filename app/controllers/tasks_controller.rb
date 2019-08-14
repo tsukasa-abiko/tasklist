@@ -51,6 +51,8 @@ class TasksController < ApplicationController
   private
   
   def task_params
-    params.require(:task).permit(:content)
+    # Strong Parameter
+    # 新規作成、編集するカラムが増えた際にはここに必ず追記する
+    params.require(:task).permit(:content, :status)
   end
 end
