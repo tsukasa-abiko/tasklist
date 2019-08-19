@@ -15,8 +15,13 @@ class TasksController < ApplicationController
     @task = Task.new(task_params)
     
     if @task.save
+      # flash → 一瞬という意味
+      # リダイレクト先でのみ使われるメッセージのことを、flashメッセージという。
       flash[:success] = 'Task が正常に投稿されました'
-      redirect_to @task
+      # TasksControllerのshowアクションへのリンク
+      # 下記はどちらも同じ
+      # redirect_to @task
+      redirect_to task_path(@task)
     else
       flash.now[:danger] = 'Task が投稿されませんでした'
       render :new
@@ -24,6 +29,7 @@ class TasksController < ApplicationController
   end
   
   def edit
+    # 投稿ボタンを押すと、TasksControllerのupdateアクションにとぶ
     @task = Task.find(params[:id])
   end
   
@@ -35,7 +41,7 @@ class TasksController < ApplicationController
       redirect_to @task
     else
       flash.now[:danger] = 'Task は更新されませんでした'
-      render :new
+      render :edit
     end
   end
 
